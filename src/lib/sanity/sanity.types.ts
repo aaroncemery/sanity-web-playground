@@ -231,3 +231,59 @@ export type SanityAssetSourceData = {
 
 export type AllSanitySchemaTypes = Blog | RichText | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
+// Source: ../sanity-web-playground/src/lib/sanity/queries.ts
+// Variable: blogPosts
+// Query: *[_type == "blog"] {    _id,    title,    slug,    image,    publishedAt,    content,  }
+export type BlogPostsResult = Array<{
+  _id: string;
+  title: string | null;
+  slug: Slug;
+  image: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  publishedAt: string;
+  content: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "h2" | "h3" | "h4" | "h5" | "h6" | "inline" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: null;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    caption?: string;
+    _type: "image";
+    _key: string;
+  }> | null;
+}>;
+
+// Query TypeMap
+import "@sanity/client";
+declare module "@sanity/client" {
+  interface SanityQueries {
+    "\n  *[_type == \"blog\"] {\n    _id,\n    title,\n    slug,\n    image,\n    publishedAt,\n    content,\n  }\n": BlogPostsResult;
+  }
+}
